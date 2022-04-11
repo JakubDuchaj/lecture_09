@@ -20,10 +20,32 @@ def read_data(file_name, field):
     return data[field]
 
 
+def linear_search(sequence, our_number):
+    vystup = {"positions": [], "count": 0}
+    for idx, number in enumerate(sequence):
+        if number == our_number:
+            vystup["positions"].append(idx)
+            vystup["count"] += 1
+    return vystup
+
+
+def pattern_search(sequence, string):
+    positions = set()
+    for idx, subdata in enumerate(sequence):
+        if idx + len(string ) < len(sequence):
+            if sequence[idx:idx + len(string)] == string:
+                positions.add(idx)
+    return positions
+
+
+
 def main():
     sequential_data = read_data("sequential.json", "unordered_numbers")
-    print(sequential_data)
-
+    print(linear_search(sequential_data, 5))
+    file_path = os.path.join(cwd_path, "sequential.json")
+    with open(file_path, "r") as json_file:
+        sequence = js.load(json_file)["dna_sequence"]
+    print(pattern_search(sequence, "ATA"))
 
 if __name__ == '__main__':
     main()
